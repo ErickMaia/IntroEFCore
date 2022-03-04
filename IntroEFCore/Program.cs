@@ -135,7 +135,7 @@ var context = new ApplicationContext();
 // System.Console.WriteLine(pedidos.Count()); 
 
 
-// ATUALIZANDO REGISTROS
+// // ATUALIZANDO REGISTROS
 
 // var cliente = context.Clientes.Find(3); 
 
@@ -143,27 +143,48 @@ var context = new ApplicationContext();
 
 //context.Clientes.Update(cliente); 
 
-// O método Update acima atualiza todas as propriedades forçadamente mesmo que seu valor não tenha mudado.  
-// Para atualizar apenas as propriedades modificadas no SQL gerado pelo EF Core, 
-// basta alterar o valor da propriedade e chamar SaveChanges()
+// // O método Update acima atualiza todas as propriedades forçadamente mesmo que seu valor não tenha mudado.  
+// // Para atualizar apenas as propriedades modificadas no SQL gerado pelo EF Core, 
+// // basta alterar o valor da propriedade e chamar SaveChanges()
 
 // context.SaveChanges(); 
 
 
-// exemplo de atualização de registro com cliente desconectado
-// exemplo: receber atualização de apenas dois campos desde um frontend para executar na API
-// nossa tarefa é atualizar apenas os campos informados no JSON
+// // exemplo de atualização de registro com cliente desconectado
+// // exemplo: receber atualização de apenas dois campos desde um frontend para executar na API
+// // nossa tarefa é atualizar apenas os campos informados no JSON
 
-var cliente = context.Clientes.Find(3); 
+// var cliente = context.Clientes.Find(3); 
 
-if(cliente is not null){
-    
-    var clienteDesconectado = new {
-        Nome = "Cliente atualizado desde JSON fornecido por frontend", 
-        Telefone = "7777777777"
-    }; 
+// if(cliente is not null){
 
-    context.Entry(cliente).CurrentValues.SetValues(clienteDesconectado); 
+//     var clienteDesconectado = new {
+//         Nome = "Cliente atualizado desde JSON fornecido por frontend", 
+//         Telefone = "7777777777"
+//     }; 
 
-    context.SaveChanges(); 
-}
+//     context.Entry(cliente).CurrentValues.SetValues(clienteDesconectado); 
+
+//     context.SaveChanges(); 
+// }
+
+
+// REMOVENDO REGISTROS
+
+// é possível buscar do banco de dados como na linha seguinte
+var cliente = context.Clientes.Find(3);
+
+// ou criar uma entidade desconectada para realizar a remoção, 
+// sem rodar o SELECT que o comando anterior faria para verificar se o registro existe
+//var clienteDesconectado = new Cliente() {Id = 3}; 
+
+
+//diferentes alterantivas de comando de remoção
+
+//remoção com o método Remove
+context.Clientes.Remove(cliente); 
+
+//remoção alterando o status da entidade (seria a forma de remover utilizando clienteDesconectado)
+//context.Entry(cliente).State = EntityState.Deleted
+
+context.SaveChanges(); 
