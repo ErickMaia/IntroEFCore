@@ -20,7 +20,9 @@ namespace IntroEFCore.Data
             optionsBuilder
                 .UseLoggerFactory(_logger)
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(connectionString); 
+                .UseSqlServer(
+                    connectionString, 
+                    p => p.EnableRetryOnFailure()); 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
