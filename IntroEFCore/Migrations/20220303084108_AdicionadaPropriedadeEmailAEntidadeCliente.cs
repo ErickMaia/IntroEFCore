@@ -4,14 +4,15 @@
 
 namespace IntroEFCore.Migrations
 {
-    public partial class AdicionarEmailAEntidadeCliente : Migration
+    public partial class AdicionadaPropriedadeEmailAEntidadeCliente : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "Email",
                 table: "Clientes",
-                type: "nvarchar(max)",
+                type: "nvarchar(60)",
+                maxLength: 60,
                 nullable: false,
                 defaultValue: "");
         }

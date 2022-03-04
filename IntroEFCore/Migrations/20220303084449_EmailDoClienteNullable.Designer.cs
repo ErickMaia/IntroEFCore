@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntroEFCore.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220302044323_AdicionarEmailAEntidadeCliente")]
-    partial class AdicionarEmailAEntidadeCliente
+    [Migration("20220303084449_EmailDoClienteNullable")]
+    partial class EmailDoClienteNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,8 +42,8 @@ namespace IntroEFCore.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Estado")
                         .IsRequired()

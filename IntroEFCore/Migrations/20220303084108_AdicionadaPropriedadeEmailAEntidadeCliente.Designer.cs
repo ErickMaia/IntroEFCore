@@ -4,6 +4,7 @@ using IntroEFCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntroEFCore.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220303084108_AdicionadaPropriedadeEmailAEntidadeCliente")]
+    partial class AdicionadaPropriedadeEmailAEntidadeCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +42,7 @@ namespace IntroEFCore.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
