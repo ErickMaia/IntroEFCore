@@ -26,6 +26,24 @@ namespace IntroEFCore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); 
+            MapearPropriedadesEsquecidas(modelBuilder); 
+        }
+
+        private void MapearPropriedadesEsquecidas(ModelBuilder modelBuilder){
+            var entityTypes = modelBuilder.Model.GetEntityTypes(); 
+
+            foreach (var entityType in entityTypes)
+            {
+                var properties = entityType.GetProperties().Where(p => p.ClrType == typeof(string)); 
+
+                foreach (var property in properties)
+                {
+                    if(string.IsNullOrEmpty(property.GetColumnType()) && !property.GetMaxLength().HasValue ){
+                        //property.SetMaxLength(100); 
+                        property.SetColumnType("VARCHAR(100)"); 
+                    }
+                }
+            }
         }
 
     }
