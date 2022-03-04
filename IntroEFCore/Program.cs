@@ -126,11 +126,44 @@ var context = new ApplicationContext();
 
 // consultando o pedido gravado
 
-var pedidos = 
-    context.Pedidos
-        .Include(p => p.Itens)
-            .ThenInclude(i => i.Produto)
-        .Include(p => p.Cliente).ToList(); 
+// var pedidos = 
+//     context.Pedidos
+//         .Include(p => p.Itens)
+//             .ThenInclude(i => i.Produto)
+//         .Include(p => p.Cliente).ToList(); 
 
-System.Console.WriteLine(pedidos.Count()); 
+// System.Console.WriteLine(pedidos.Count()); 
 
+
+// ATUALIZANDO REGISTROS
+
+// var cliente = context.Clientes.Find(3); 
+
+// cliente.Nome = "Cliente alterado"; 
+
+//context.Clientes.Update(cliente); 
+
+// O método Update acima atualiza todas as propriedades forçadamente mesmo que seu valor não tenha mudado.  
+// Para atualizar apenas as propriedades modificadas no SQL gerado pelo EF Core, 
+// basta alterar o valor da propriedade e chamar SaveChanges()
+
+// context.SaveChanges(); 
+
+
+// exemplo de atualização de registro com cliente desconectado
+// exemplo: receber atualização de apenas dois campos desde um frontend para executar na API
+// nossa tarefa é atualizar apenas os campos informados no JSON
+
+var cliente = context.Clientes.Find(3); 
+
+if(cliente is not null){
+    
+    var clienteDesconectado = new {
+        Nome = "Cliente atualizado desde JSON fornecido por frontend", 
+        Telefone = "7777777777"
+    }; 
+
+    context.Entry(cliente).CurrentValues.SetValues(clienteDesconectado); 
+
+    context.SaveChanges(); 
+}
